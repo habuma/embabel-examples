@@ -1,4 +1,13 @@
 package com.example.customerserviceagent.domain;
 
-public record FinalResponse(String resolutionSummary) {
+import com.embabel.agent.domain.library.HasContent;
+import org.jetbrains.annotations.NotNull;
+
+public record FinalResponse(String resolutionSummary) implements HasContent {
+
+  @Override
+  public @NotNull String getContent() {
+    return resolutionSummary;
+  }
+
 }
