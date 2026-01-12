@@ -100,10 +100,7 @@ http://localhost:5001 into your browser's address bar.
 Enter http://localhost:8080/a2a/.well-known/agent.json into the text box at the top and
 then click the "Connect" button. You should see the agent card displayed below.
 
-> The following does not (yet) work fully. But I'm documenting it here as I would expect
-> it to work.
-
 Scroll down to find the "Chat" section and type a message to send in the text field at
 the bottom. For example, "Say hello to Craig". Then click the "Send" button. The agent
-will begin processing the input. Once it completes, the response should be displayed
-in the session text box above.
+will begin processing the input. You will see the A2A status updates appear in the chat
+session text box.
