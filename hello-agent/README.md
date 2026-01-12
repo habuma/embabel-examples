@@ -13,6 +13,9 @@ It has two action methods:
 
 Running the agent
 ---
+The agent uses the GPT-OSS model running on a local Ollama. Therefore, before running
+the agent, be sure to install Ollama and the GPT-OSS model (if you've not done so already).
+
 Run the agent as you would any Spring Boot application: 
 
 ```shell
@@ -104,3 +107,35 @@ Scroll down to find the "Chat" section and type a message to send in the text fi
 the bottom. For example, "Say hello to Craig". Then click the "Send" button. The agent
 will begin processing the input. You will see the A2A status updates appear in the chat
 session text box, including the greeting message in the final update.
+
+Accessing the agent with Claude Desktop
+---
+
+The MCP Server exposed by this agent employs the Streamable HTTP transport. At this time,
+Claude Desktop does not directly support the Streamable HTTP transport. But you can 
+configure an STDIO server that proxies to the Streamable HTTP MCP Server.
+
+Edit your Claude Desktop configuration file to include the following MCP Server:
+
+```
+{
+  "mcpServers": {
+    "hello-agent": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:8080/mcp"
+      ]
+    }
+  }
+}
+```
+
+The location of your Claude Desktop configuration file will vary depending on your
+operating system and username. On my Mac machine, it is at `/Users/habuma/Library/Application Support/Claude/claude_desktop_config.json`.
+You can also find it by opening Settings in Claude Desktop, going to the "Developer"
+tab, then clicking the "Edit Config" button near the top of the screen.
+
+Once you've made the change to Claude Desktop's configuration, try it out by opening
+a chat in Claude Desktop and asking it to say hello to someone.

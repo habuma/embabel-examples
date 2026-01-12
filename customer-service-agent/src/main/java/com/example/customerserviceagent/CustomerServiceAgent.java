@@ -105,6 +105,8 @@ public class CustomerServiceAgent {
 
     var prompt = """
         Generate a final response to the customer including a summary of the resolution details.
+        
+        Format the response as Markdown
         """;
     var responseText = config.getCustomerService().promptRunner(context)
         .withPromptContributors(List.of(orderDetails, resolutionPlan, resolutionConfirmation))
