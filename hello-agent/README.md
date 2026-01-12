@@ -103,4 +103,4 @@ then click the "Connect" button. You should see the agent card displayed below.
 Scroll down to find the "Chat" section and type a message to send in the text field at
 the bottom. For example, "Say hello to Craig". Then click the "Send" button. The agent
 will begin processing the input. You will see the A2A status updates appear in the chat
-session text box.
+session text box, including the greeting message in the final update.
