@@ -1,7 +1,9 @@
 package com.example.customerserviceagent;
 
 import com.embabel.agent.api.annotation.*;
+import com.embabel.agent.api.common.Ai;
 import com.embabel.agent.api.common.OperationContext;
+import com.embabel.agent.domain.io.UserInput;
 import com.example.customerserviceagent.domain.*;
 import com.example.customerserviceagent.order.OrderService;
 import org.slf4j.Logger;
@@ -23,6 +25,19 @@ public class CustomerServiceAgent {
   public CustomerServiceAgent(OrderService orderService, CSConfig config) {
     this.orderService = orderService;
     this.config = config;
+  }
+
+  @Action(description = "Process user input")
+  public CustomerInput processUserInput(UserInput userInput, Ai ai) {
+    String prompt = """
+        From the given user input, determine the order number (if specified) and 
+        the user's inquiry text.
+        
+        User input: 
+        """;
+
+    return ai.withDefaultLlm()
+        .createObject(prompt + userInput.getContent(), CustomerInput.class);
   }
 
   @Action(description = "Classifies the issue based on customer input")
