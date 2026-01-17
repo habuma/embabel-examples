@@ -183,61 +183,6 @@ Once you've made the change to Claude Desktop's configuration, try it out by ope
 a chat in Claude Desktop and asking it to resolve an order issue, such as "My order
 number is 112233. It arrived damaged. Please send me a new one."
 
-
-
-
-
-
-
-
-
-
-
-Run it as you would run any Spring Boot
-application. For example, using the Gradle wrapper:
-
-```sh
-./gradlew bootRun
-```
-
-Once the agent is running, it will expose an MCP server on port 8080. You can poke at this
-MCP server using the [MCP inspector](https://modelcontextprotocol.io/docs/tools/inspector)
-(using the Streamable HTTP protocol at http://localhost:8080/mcp) or you can configure your favorite
-LLM/Agent UI to use the MCP server.
-
-To configure it in Claude Desktop, you'll need to run it through the MCP-Remote MCP server
-which proxies through a local MCP server (since Claude Desktop does not yet support remote
-MCP). To do that, add the following configuration to your Claude Desktop configuration:
-
-```yaml
-{
-  "mcpServers": {
-    "customer-service": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "http://localhost:8080/mcp"
-      ]
-    }
-  }
-}
-```
-
-Then start a chat via the UI. You can try things like:
-
-- My order arrived damaged. I want a refund.
-- I ordered a red sweater, but received a green sweater. Can you please help?
-- My order is a week late in arriving. Please help me.
-
-When asked for an order number, numbers "112233", "223344", and "334455" are the order numbers
-for three orders available in the database.
-
-Note that (for the most part) the resolution that the agent arrives at is usually pretty
-good. But, at this point I didn't spend much effort defining policies for the agent to
-follow. As a result, it kinda wings it and sometimes responds with unusual resolutions.
-Maybe I'll provide policies at some point in the future.
-
 Accessing the agent with Goose
 ---
 
@@ -259,6 +204,42 @@ as an MCP Server). The steps to do that are:
    - Endpoint: http://localhost:8080/mcp
  - Leave all other fields as they are
  - Click the "Add Extension" button
+
+Optionally, if you've installed the Goose CLI, you can configure the extension using the
+`configure` command:
+
+```shell
+$ goose configure                                                                                                                 ⎇ main
+
+This will update your existing config files
+  if you prefer, you can edit them directly at /Users/someuser/.config/goose
+
+┌   goose-configure
+│
+◇  What would you like to configure?
+│  Add Extension
+│
+◇  What type of extension would you like to add?
+│  Remote Extension (Streamable HTTP)
+│
+◇  What would you like to call this extension?
+│  Customer Service
+│
+◇  What is the Streaming HTTP endpoint URI?
+│  http://localhost:8080/mcp
+│
+◇  Please set the timeout for this tool (in secs):
+│  300
+│
+◇  Enter a description for this extension:
+│  Enables customer service functions such helping a user with issues with their order.
+│
+◇  Would you like to add custom headers?
+│  No
+│
+└  Added Customer Service extension
+└  Configuration saved successfully to /Users/someuser/.config/goose/config.yaml
+```
 
 Then navigate to Goose's chat functionality by clicking on "Chat" in the sidebar navigation.
 Try inquiring about an order by asking something like "My order number is 223344. It hasn't 
