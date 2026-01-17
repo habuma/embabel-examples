@@ -11,13 +11,13 @@ It has two action methods:
 
 - `processUserInput()` - This action processes the user input into a domain object that
   includes the order number and the user's inquiry.
-- `classifyIssue()` - This action tried to classify the inquiry as MISSING_ITEM, 
+- `classifyIssue()` - This action tried to classify the inquiry as MISSING_ITEM,
   DAMAGED_ITEM, WRONG_ITEM, DELAYED, REFUND_REQUEST, or OTHER
 - `checkOrderStatus()` - This action looks up the order from the database.
 - `determineResolutionPlan()` - This action uses the LLM to determine a resolution plan
   of REFUND, RESEND_ITEM, or CONTACT_CUSTOMER.
 - `executeResolution()` - This action is intended to execute the plan, potentially
-  updating the order's status in the database. But at this time it only returns a 
+  updating the order's status in the database. But at this time it only returns a
   resolution confirmation domain object.
 - `resolveIssue()` - This action achieves the goal of addressing the customer's inquiry
   and returns the final resolution response.
@@ -73,7 +73,7 @@ should see a list of 4 tools: `helloBanner`, `inquiry`, `_confirm`, and
 
 On the far right, you should see a form that includes two text areas labeled "orderNumber"
 and "text". Enter an order number (e.g., "112233") and the inquiry text (e.g., "My order
-arrived damaged. Please send a replacement.") Then click the "Run Tool" button. Once the 
+arrived damaged. Please send a replacement.") Then click the "Run Tool" button. Once the
 agent has processed the request, you should see the resolution text under "Tool Result".
 
 Accessing the agent with Claude Code
@@ -145,8 +145,8 @@ Enter http://localhost:8080/a2a/.well-known/agent.json into the text box at the 
 then click the "Connect" button. You should see the agent card displayed below.
 
 Scroll down to find the "Chat" section and type a message to send in the text field at
-the bottom. For example, "My order number is 112233. It arrived damaged. Please send me a 
-new one.". Then click the "Send" button. The agent will begin processing the input. You will 
+the bottom. For example, "My order number is 112233. It arrived damaged. Please send me a
+new one.". Then click the "Send" button. The agent will begin processing the input. You will
 see the A2A status updates appear in the chat session text box, including the final response
 message in the session text box.
 
@@ -180,7 +180,7 @@ You can also find it by opening Settings in Claude Desktop, going to the "Develo
 tab, then clicking the "Edit Config" button near the top of the screen.
 
 Once you've made the change to Claude Desktop's configuration, try it out by opening
-a chat in Claude Desktop and asking it to resolve an order issue, such as "My order 
+a chat in Claude Desktop and asking it to resolve an order issue, such as "My order
 number is 112233. It arrived damaged. Please send me a new one."
 
 
@@ -237,3 +237,30 @@ Note that (for the most part) the resolution that the agent arrives at is usuall
 good. But, at this point I didn't spend much effort defining policies for the agent to
 follow. As a result, it kinda wings it and sometimes responds with unusual resolutions.
 Maybe I'll provide policies at some point in the future.
+
+Accessing the agent with Goose
+---
+
+[Goose](https://block.github.io/goose/) is chat-oriented implementation of an agentic
+loop. It can be used as either a desktop application (similar to Claude Desktop) or as a
+CLI (similar to Cursor or Claude Code).
+
+To use the Customer Service agent within Goose (desktop), configure it as an extension (e.g., 
+as an MCP Server). The steps to do that are:
+
+ - Open Goose
+ - Click on the "Extensions" sidebar navigation on the left
+ - Click the "+ Add custom extension" button
+ - Enter the following values into the form:
+   - **Extension name**: Customer Service
+   - Type: Streamable HTTP
+   - Description: Enables customer service functions such helping a user with issues with 
+     their order.
+   - Endpoint: http://localhost:8080/mcp
+ - Leave all other fields as they are
+ - Click the "Add Extension" button
+
+Then navigate to Goose's chat functionality by clicking on "Chat" in the sidebar navigation.
+Try inquiring about an order by asking something like "My order number is 223344. It hasn't 
+arrived. I want a refund." If all goes well, you should see the results once the Customer
+Service agent has achieved its goal.
